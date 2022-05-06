@@ -7,6 +7,24 @@ export default function() {
       htmlAfter: ""
     },
     {
+      title: "Rooms",
+      to: "/rooms",
+      htmlBefore: '<i class="material-icons">edit</i>',
+      htmlAfter: ""
+    },
+    {
+      title: "Features",
+      to: "/features",
+      htmlBefore: '<i class="material-icons">edit</i>',
+      htmlAfter: "" 
+    },
+    {
+      title: "Priority",
+      to: "/priority",
+      htmlBefore: '<i class="material-icons">edit</i>',
+      htmlAfter: "" 
+    },
+    {
       title: "Blog Posts",
       htmlBefore: '<i class="material-icons">vertical_split</i>',
       to: "/blog-posts",

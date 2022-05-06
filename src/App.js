@@ -7,11 +7,15 @@ import withTracker from "./withTracker";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./shards-dashboard/styles/shards-dashboards.1.1.0.min.css";
 
+import { Provider } from 'react-redux';
+import store from './store/store';
+
 export default () => (
+  <Provider store={store}>
   <Router basename={process.env.REACT_APP_BASENAME || ""}>
     <div>
       {routes.map((route, index) => {
-        return (
+        return (  
           <Route
             key={index}
             path={route.path}
@@ -28,4 +32,5 @@ export default () => (
       })}
     </div>
   </Router>
+  </Provider>
 );

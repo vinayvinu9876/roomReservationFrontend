@@ -12,6 +12,12 @@ import Errors from "./views/Errors";
 import ComponentsOverview from "./views/ComponentsOverview";
 import Tables from "./views/Tables";
 import BlogPosts from "./views/BlogPosts";
+import Rooms from "./views/Rooms";
+import AddRoom from "./views/Rooms/AddRoom";
+import Features from "./views/Features";
+import AddFeature from "./views/Features/addFeature";
+import Priority from "./views/Priority";
+import AddPriority from "./views/Priority/addPriority";
 
 export default [
   {
@@ -19,6 +25,36 @@ export default [
     exact: true,
     layout: DefaultLayout,
     component: () => <Redirect to="/blog-overview" />
+  },
+  {
+    path : "/rooms",
+    layout : DefaultLayout,
+    component : Rooms
+  },
+  {
+    path : "/features",
+    layout : DefaultLayout,
+    component : Features
+  },
+  {
+    path : "/addFeature",
+    layout : DefaultLayout,
+    component : AddFeature
+  },
+  {
+    path : "/addRoom",
+    layout : DefaultLayout,
+    component : AddRoom
+  },
+  {
+    path : "/addPriority",
+    layout : DefaultLayout,
+    component : AddPriority
+  },
+  {
+    path : "/priority",
+    layout : DefaultLayout,
+    component : Priority
   },
   {
     path: "/blog-overview",
