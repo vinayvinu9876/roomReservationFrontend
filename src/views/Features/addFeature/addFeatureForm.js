@@ -72,7 +72,6 @@ const AddFeatureForm = () =>{
                             }}/>
                     </Col>
                     <Col md="5" className="form-group">
-                        {/*active,maintenance,permanently_unavailable*/}
                         <label>Status</label>
                         <FormSelect
                             value={status} 
