@@ -5,23 +5,57 @@ import AddRoomForm from "./addRoomForm";
 import RoomImages from "./roomImages";
 import RoomFeature from "./roomFeatures/index";
 import RoomDownTime from "./roomDownTime";
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { addRoom } from '../../../store/rooms/addRoom/addRoomSlice';
+import { useDispatch, useSelector } from "react-redux";
+import { AtomSpinner } from "react-epic-spinners";
 
-class AddRoom extends React.Component{
+const AddRoom = () =>{
 
-    render(){
-        return (
+    const dispatch = useDispatch();
+
+    const loading = useSelector(state => state.addRoom.loading);
+    const errMessage = useSelector(state => state.addRoom.errMessage);
+    const successMessage = useSelector(state=>state.addRoom.successMessage);
+
+    return (
         <Container fluid className="main-content-container px-4">
         {/* Page Header */}
         <Row noGutters className="page-header py-4">
             <PageTitle sm="4" title="Add" subtitle="Rooms" className="text-sm-left" />   
         </Row>
-        <Row>
-            <Col md={6} lg={6} sm={12} xs={12} style={{marginBottom:"10px"}} >
-                <Button size={"sm"} theme="primary">Add</Button>
-                <Link to="/rooms" style={{marginLeft:"15px"}}><Button size={"md"} theme="danger">Cancel</Button></Link>
-            </Col>
-        </Row>
+        {
+            (!loading) &&
+            <Row>
+                <Col md={6} lg={6} sm={12} xs={12} style={{marginBottom:"20px"}} >
+                    <Button size={"sm"} onClick={()=>{dispatch(addRoom())}} theme="primary">Add</Button>
+                    <Link to="/rooms" style={{marginLeft:"10px"}}><Button size={"md"} theme="danger">Cancel</Button></Link>
+                </Col>
+            </Row>
+        }
+        {
+            (!loading) && (errMessage) &&
+            <div>
+                <p style={{color:"red",marginTop:"10px"}}>{errMessage}</p>
+            </div>
+        }
+        {
+            (!loading) && (successMessage) &&
+            <div>
+                <p style={{color:"green",marginTop:"10px"}}>{successMessage}</p>
+            </div>
+        }
+        {   
+            (loading) &&
+            <div style={{padding:"35px"}}>
+                <center>
+                    <AtomSpinner color={"blue"} />
+                </center>
+            </div>
+        }
+        {
+        (!loading) && 
+        <>
         <Row>
             <Col>
                 <Card small className="mb-4">
@@ -56,11 +90,10 @@ class AddRoom extends React.Component{
                 <RoomDownTime />
             </Col>
         </Row>
+        </>
+        }
         </Container>
     )
-
-    }
-
 }
 
 export default AddRoom;

@@ -18,6 +18,7 @@ import Features from "./views/Features";
 import AddFeature from "./views/Features/addFeature";
 import Priority from "./views/Priority";
 import AddPriority from "./views/Priority/addPriority";
+import ViewRoom from "./views/Rooms/ViewRoom";
 
 export default [
   {
@@ -30,6 +31,11 @@ export default [
     path : "/rooms",
     layout : DefaultLayout,
     component : Rooms
+  },
+  {
+    path :  "/viewRoom",
+    layout : DefaultLayout,
+    component : ViewRoom,
   },
   {
     path : "/features",

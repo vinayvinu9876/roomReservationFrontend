@@ -7,9 +7,10 @@ const fetchRooms = () =>{
         const url = buildUrl("room/read");
         dispatch(setFetchingRooms());
         axios.post(url).then((res)=>{ 
+            console.log("response = ",res.data);
             if(res.status === 200){
                 if(res.data["status"]==="success"){
-                    dispatch(setFetchingRoomsSuccesful(res.data["data"]["rooms"]));
+                    dispatch(setFetchingRoomsSuccesful(res.data["data"]));
                 }
                 else{
                     dispatch(setFetchingRoomsFailure(res.data["message"]));

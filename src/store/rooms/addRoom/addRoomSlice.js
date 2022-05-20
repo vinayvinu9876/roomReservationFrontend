@@ -6,12 +6,12 @@ const initState = {
     errMessage: null,
     successMessage:  null,
 
-    room_name : null,
+    room_name : null, 
     room_desc : null,
     room_capacity : null,
     status : null,
 
-    room_images : [],
+    room_images : [],     // {image : <uri_data> , filename : <string> }
     room_features : [],   // {feature_id : <number> ,feature_name : <string>, no_of_items : <number> ,total_available : <number> }
     room_down_time : [] , // {day: <string> , start : <time> , end : <time> , desc : <string> } 
 };
@@ -55,6 +55,7 @@ const addRoomSlice = createSlice({
 
         addRoomImage(state,action){
             state.room_images = action.payload;
+            console.log("room images = ",state.room_images);
         },
 
         addRoomFeature(state,action){

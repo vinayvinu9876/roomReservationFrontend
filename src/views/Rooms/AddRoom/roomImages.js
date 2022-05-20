@@ -19,13 +19,20 @@ const RoomImages = () =>{
     const loadImages = images => {
         for(var i=0;i<images.length;i++){
             let reader = new FileReader();
+            const fname = images[i].name;
             reader.onload = e => {   
                 let temp = [...roomImages];
 
                 if(temp.includes(e.target.result)){
                     return;
                 }
-                temp.push(e.target.result);
+                
+                const payload = {
+                    image : e.target.result,
+                    filename : fname
+                };
+
+                temp.push(payload);
                 dispatch(addRoomImage(temp));
             }   
             reader.readAsDataURL(images[i]);
@@ -38,21 +45,13 @@ const RoomImages = () =>{
         for(var i=0;i<evt.target.files.length;i++){
             fileList.push(evt.target.files[i]);
         };
-
-        console.log("File list length = ",fileList.length);
         loadImages(fileList);
     };
 
-    const removeImage = img => {
-
+    const removeImage = idx => {
         const temp = [...roomImages];
-
-        if(temp.includes(img)){
-            const idx = temp.indexOf(img);
-            temp.splice(idx,1);
-            dispatch(addRoomImage(temp));
-        }
-
+        temp.splice(idx,1);
+        dispatch(addRoomImage(temp));
     }
 
     return (
@@ -70,8 +69,11 @@ const RoomImages = () =>{
                     roomImages.map((val,index)=>{
                         return (
                             <div key={"selectedImage"+index}>
-                                <img alt={"Selected Room image "+index} key={"image"+index} style={{margin:"15px"}} height={150} width={150} src={val} />
-                                <center><Button theme="danger" onClick={()=>{removeImage(val)}}>Remove</Button></center>
+                                <img alt={"Selected Room image "+index} key={"image"+index} style={{margin:"15px"}} height={150} width={150} src={val["image"]} />
+                                <br />
+                                <center><span>{val["filename"]}</span></center>
+                                <br />
+                                <center><Button theme="danger" onClick={()=>{removeImage(index)}}>Remove</Button></center>
                             </div>
                         )
                     })

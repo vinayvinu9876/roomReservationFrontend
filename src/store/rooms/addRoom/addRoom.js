@@ -15,7 +15,11 @@ const addRoom = () => {
             room_name : state.room_name,
             room_desc : state.room_desc,
             room_capacity :state.room_capacity,
-            status : state.status
+            status : state.status,
+
+            room_images : state.room_images,
+            room_features : state.room_features,
+            room_down_time : state.room_down_time
         };
 
         console.log("Payload=  ",payload);
@@ -41,12 +45,21 @@ const addRoom = () => {
             return;
         }
 
+        if(!payload.room_images.length===0){
+            dispatch(setAddingRoomFailed("Please add atleast one image"));
+            return;
+        }
+
         var formdata = new FormData();
 
         formdata.append("room_name",payload.room_name);
         formdata.append("room_desc",payload.room_desc);
         formdata.append("room_capacity",payload.room_capacity);
         formdata.append('status',payload.status);
+
+        formdata.append("room_images",JSON.stringify(payload.room_images));
+        formdata.append("room_features",JSON.stringify(payload.room_features));
+        formdata.append("room_down_time",JSON.stringify(payload.room_down_time));
 
         axios.post(url,formdata).then((res)=>{
 
