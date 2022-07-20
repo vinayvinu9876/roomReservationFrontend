@@ -10,6 +10,12 @@ const RoomDownTimeView = ({room_id}) =>{
 
     const downTimeData = useSelector(state=>state.viewRoom.room_down_time);
 
+    if(!downTimeData){
+        return <></>;
+    }
+
+    
+
     return (
         <Card small className="mb-4">
             <CardHeader className="border-bottom">

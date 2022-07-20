@@ -6,6 +6,11 @@ import priorityReducer from './priority/prioritySlice';
 import addRoomReducer from './rooms/addRoom/addRoomSlice';
 import roomsReducer from './rooms/roomsSlice';
 import viewRoomReducer from './rooms/viewRoom/viewRoomSlice';
+import userRoomSlice from './UserRooms/userRoomSlice';
+import userRoomViewSlice from './UserRoomView/userRoomViewSlice';
+import roomScheduleSlice from './roomSchedule/roomScheduleSlice';
+import addRoomReservationSlice from './addRoomReservation/addRoomReservationSlice';
+import reservedMeetingListSlice from './reservedMeetingList/reservedMeetingListSlice';
 
 export default configureStore({
     reducer: {
@@ -18,5 +23,13 @@ export default configureStore({
 
       "priority" : priorityReducer,
       "addPriority" : addPriorityReducer,
+
+      "userRooms" : userRoomSlice,
+      "userRoomView" : userRoomViewSlice,
+
+      "roomSchedule" : roomScheduleSlice,
+      "addRoomReservation" : addRoomReservationSlice,
+
+      "reservedMeetingList" : reservedMeetingListSlice
     }
 });

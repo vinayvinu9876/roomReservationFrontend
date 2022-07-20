@@ -9,7 +9,6 @@ const initState = {
 };
 
 const roomsSlice = createSlice({
-
     name : "rooms",
     initialState : initState,
     reducers : {

@@ -28,8 +28,6 @@ const ViewRoom = () =>{
     const roomData = useSelector(state=>state.viewRoom.room_data);
     const errMessage = useSelector(state=>state.viewRoom.errMessage);
 
-    
-
     console.log("room data = ",roomData);
 
     return (

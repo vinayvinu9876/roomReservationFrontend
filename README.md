@@ -15,7 +15,7 @@
 </p>
 
 <p align="center">
-A free React admin dashboard template pack featuring a modern design system <br />  and lots of custom templates and components.
+  A free React admin dashboard template pack featuring a modern design system <br />  and lots of custom templates and components.
 </p>
 
 <p align="center">

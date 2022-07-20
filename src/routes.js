@@ -19,6 +19,9 @@ import AddFeature from "./views/Features/addFeature";
 import Priority from "./views/Priority";
 import AddPriority from "./views/Priority/addPriority";
 import ViewRoom from "./views/Rooms/ViewRoom";
+import UserRooms from "./views/UserRooms";
+import UserRoomView from "./views/UserRoomView";
+import ReservedMeetingView from "./views/ReservedMeetingView";
 
 export default [
   {
@@ -26,6 +29,16 @@ export default [
     exact: true,
     layout: DefaultLayout,
     component: () => <Redirect to="/blog-overview" />
+  },
+  {
+    path : '/userRoomView',
+    layout : DefaultLayout,
+    component : UserRoomView
+  },
+  {
+    path : "/reservedMeetingView",
+    layout : DefaultLayout,
+    component : ReservedMeetingView
   },
   {
     path : "/rooms",
@@ -96,5 +109,10 @@ export default [
     path: "/blog-posts",
     layout: DefaultLayout,
     component: BlogPosts
+  },
+  {
+    path : "/user-rooms",
+    layout : DefaultLayout,
+    component : UserRooms
   }
 ];

@@ -13,6 +13,18 @@ export default function() {
       htmlAfter: ""
     },
     {
+      title : "User Rooms",
+      to : "/user-rooms",
+      htmlBefore : "<i class='material-icons'>edit</i>",
+      htmlAfter : ""
+    },
+    {
+      title : "Meeting List",
+      to : "/reservedMeetingView",
+      htmlBefore : "<i class='material-icons'>edit</i>",
+      htmlAfter : ""
+    },
+    {
       title: "Features",
       to: "/features",
       htmlBefore: '<i class="material-icons">edit</i>',

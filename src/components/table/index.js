@@ -4,13 +4,13 @@ import PageTitle from "../common/PageTitle";
 import { AtomSpinner } from "react-epic-spinners";
 import DataTable from "react-data-table-component";
 
-const CustomTablePage = ({pageName, loading,errMessage,columns,data,child}) =>{
+const CustomTablePage = ({pageName, loading,errMessage,columns,data,child,subtitle}) =>{
 
     return (
         <Container fluid className="main-content-container px-4">
             {/* Page Header */}
             <Row noGutters className="page-header py-4">
-                <PageTitle sm="4" title={pageName} subtitle="Manage" className="text-sm-left" />
+                <PageTitle sm="4" title={pageName} subtitle={subtitle ? subtitle : "Manage"} className="text-sm-left" />
             </Row>
 
             <Row>

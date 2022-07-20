@@ -10,6 +10,10 @@ const RoomImagesView = ({room_id}) =>{
     const dispatch = useDispatch();
     const roomImages = useSelector(state=>state.viewRoom.room_media);
 
+    if(!roomImages){
+        return <></>;
+    }
+
     return (    
         <>
             <Card small className="mb-4">
@@ -17,6 +21,8 @@ const RoomImagesView = ({room_id}) =>{
                     <h6 className="m-0">Room Images</h6>
                 </CardHeader>
                 <CardBody className="p-0 pb-3">
+                    {
+                    roomImages.length>0 &&
                     <Row>
                         {
                             roomImages.map((val,index)=>{
@@ -42,6 +48,7 @@ const RoomImagesView = ({room_id}) =>{
                         }
                         <AddImageButton room_id={room_id}/>
                     </Row>
+                    }
                 </CardBody>
             </Card>
         </>

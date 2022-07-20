@@ -15,6 +15,7 @@ const viewRoom = (room_id) =>{
 
                 if(res.data["status"]==="success"){
                     dispatch(setFetchingRoomDataSuccess(res.data["data"]));
+                    console.log("recieved room data = ",res.data["data"])
                 }
                 else{
                     dispatch(setFetchingRoomDataFailure(res.data["message"]));

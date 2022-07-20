@@ -11,12 +11,20 @@ const RoomFeatureView = ({room_id}) =>{
 
     const dispatch = useDispatch();
 
+
+    if(!roomFeatures){
+        return <></>;
+    }
+
+
     return (
         <Card small className="mb-4">
                 <CardHeader className="border-bottom">
                     <h6 className="m-0">Room Features</h6>
                 </CardHeader>
                 <CardBody className="p-0 pb-3">
+                    {
+                    roomFeatures.length>0 &&
                     <table className="table mb-0">
                         <thead className="bg-light">
                             <tr>
@@ -28,6 +36,7 @@ const RoomFeatureView = ({room_id}) =>{
                         </thead>
                         <tbody>
                             {
+                                
                                 roomFeatures.map((val,index)=>{
                                     return (    
                                         <tr>
@@ -59,6 +68,7 @@ const RoomFeatureView = ({room_id}) =>{
                             
                         </tbody>
                     </table>
+                    }
                 </CardBody>
             </Card>
     )
