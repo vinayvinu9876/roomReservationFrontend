@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import getReservedMeetingList from "./getReservedMeetingList";
+import cancelMeeting from "./cancelMeeting";
 
 const initialState = {
     loading : false,
@@ -72,12 +73,25 @@ const ReservedMeetingList = createSlice({
 
         setSortId(state,action){
             state.sort = action.payload;
-        }
+        },
+
+        setCancellingMeeting(state,action){
+            state.loading = true;
+            state.errMessage = null;
+        },
+
+        setCompletedCancelMeeting(state,action){
+            state.loading = false;
+            state.errMessage = null;
+        },
+
+        
     }
 });
 
-export {getReservedMeetingList};
+export {getReservedMeetingList,cancelMeeting};
 
+export const {setCancellingMeeting,setCompletedCancelMeeting} = ReservedMeetingList.actions;
 export const { setSearchText, setStartDate, setEndDate, setRoomId, setSortId } = ReservedMeetingList.actions;
 export const {setFetchingMeetingList,setFetchingMeetingListFailure,setFetchingMeetingListSuccessful} = ReservedMeetingList.actions;
 

@@ -3,6 +3,7 @@ import {Button,FormInput,Row,Col,FormSelect} from 'shards-react';
 import { useSelector , useDispatch } from "react-redux/es/exports";
 import {getReservedMeetingList} from "../../store/reservedMeetingList/reservedMeetingListSlice";
 import { setSearchText, setStartDate, setEndDate, setRoomId, setSortId } from "../../store/reservedMeetingList/reservedMeetingListSlice";
+import RoomSelect from "../../components/RoomSelect";
 
 const SearchBr = () => {
 
@@ -45,13 +46,8 @@ const SearchBr = () => {
                 <Row>
                     <Col lg={6} md={6} sm={12} xs={12}>
                         <strong className="text-muted d-block mb-2">Room</strong>
-                        <FormSelect id="feInputState" value={room_id} onChange={evt=>dispatch(setRoomId(evt.target.value))}>
-                            <option value={null}>Select</option>
-                            <option>A35</option>
-                            <option>A36</option>
-                            <option>A37</option>
-                            <option>A38</option>
-                        </FormSelect>
+                        <RoomSelect val={room_id} onChange={value=>dispatch(setRoomId(value))} />
+                        
                     </Col>
                     
                     <Col lg={6} md={6} sm={12} xs={12}>

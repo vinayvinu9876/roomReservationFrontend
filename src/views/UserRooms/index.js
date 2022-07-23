@@ -1,9 +1,12 @@
 import React,{useEffect} from 'react';
-import CustomTablePage from '../../components/table';
 import { Button } from 'shards-react';
 import { Link } from 'react-router-dom';
 import { useDispatch,useSelector } from 'react-redux';
 import fetchUserRooms from '../../store/UserRooms/fetchUserRooms';
+import { Container, Row, Col, Card, CardHeader, CardBody } from "shards-react";
+import Pagination from '../../components/Pagination/pagination';
+import PageTitle from "../../components/common/PageTitle";
+import { AtomSpinner } from "react-epic-spinners";
 
 const UserRooms = () => {
 
@@ -17,53 +20,100 @@ const UserRooms = () => {
     const errMessage = useSelector(state=>state.userRooms.errMessage);
     const roomsData = useSelector(state=>state.userRooms.rooms);
 
-    const columns = [
-        {
-            name : "#",
-            selector : row => row.room_id,
-            sortable : false,
-        },
-        {
-            name: 'Room Name',
-            selector: row => row.room_name,
-            sortable: true,
-            sortField: 'room_name',
-        },
-        {
-            name: 'Capacity',
-            selector: row => row.room_capacity,
-            sortable: true,
-            sortField: 'capacity',
-        },
-        {
-            name: 'Status',
-            selector: row => row.status,
-            sortable: true,
-            sortField: 'status',
-        },
-        {
-          name : "Updated on",
-          selector : row => row.updated_at,
-          sortable : true,
-          sortField : "updated_at"
-        },
-        {
-          name :"Reserve",
-          cell : (row,index,column,id)=>{return <Link to={`/userRoomView?room_id=${row.room_id}`}><Button theme="primary">Reserve   </Button></Link>}
-        }
-    ];
+    const start = useSelector(state=>state.userRooms.start);
+    const end = useSelector(state=>state.userRooms.end);
+    const totalPages = useSelector(state=>state.userRooms.totalPages);
+    const currentPageNo = useSelector(state=>state.userRooms.currentPageNo);
+    const totalResults = useSelector(state=>state.userRooms.totalResults);
 
     return (
-        <CustomTablePage 
-            pageName={"Meeting Rooms"}
-            columns={columns}
-            loading={loading}
-            errMessage={errMessage}
-            data = {roomsData}
-            child={<></>}
-            subtitle={"Reserve"}
-        />
+        <Container fluid className="main-content-container px-4">
+            {/* Page Header */}
+            <Row noGutters className="page-header py-4">
+                <PageTitle sm="4" title="Meeting Room" subtitle="Reserve A" className="text-sm-left" />
+            </Row>
+
+            {/* Default Light Table */}
+            <Row>
+            <Col>
+                <Card small className="mb-4">
+                <CardHeader className="border-bottom">
+                    <h6 className="m-0">Meeting Rooms</h6>
+                </CardHeader>
+                <CardBody className="p-0 pb-3">
+                    {
+                        loading &&
+                        <div style={{width:"100%",height:"200px",padding:"20px"}}>
+                            <center><AtomSpinner color={"blue"} /> </center>
+                        </div>
+                    }
+                    {
+                        (!loading) && (errMessage) &&
+                        <div style={{width:"100%",height:"200px",padding:"20px"}}>
+                            <p style={{color:"red"}}>{errMessage}</p>
+                        </div>
+                    }
+                    {
+                    (!loading) && (!errMessage) &&
+                    <table className="table mb-0">
+                    <thead className="bg-light">
+                        <tr>
+                        <th scope="col" className="border-0">
+                            #
+                        </th>
+                        <th scope="col" className="border-0">
+                            Room Name
+                        </th>
+                        <th scope="col" className="border-0">
+                            Capacity
+                        </th>
+                        <th scope="col" className="border-0">
+                            Reserve
+                        </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            roomsData.map((val,index)=>{
+
+                                return (
+                                    <tr>
+                                        <td>{start+index}</td>
+                                        <td>{val["room_name"]}</td>
+                                        <td>{val["room_capacity"]}</td>
+                                        <td>
+                                            <Link to={`/userRoomView?room_id=${val["room_id"]}`}>
+                                                <Button theme="primary">Reserve</Button>
+                                            </Link>
+                                        </td>
+                                    </tr>
+                                )
+
+                            })
+                            
+                        }
+                    </tbody>
+                    </table>
+                    }
+                </CardBody>
+                </Card>
+                <Pagination 
+                    start={start}
+                    end={end}
+                    totalPages={totalPages}
+                    activePageNo={parseInt(currentPageNo)}
+                    totalResults={totalResults}
+                    onPageClick={
+                        (pageNo)=>{dispatch(fetchUserRooms(pageNo));}
+                    }
+                />
+            </Col>
+            </Row>
+
+        </Container>
+        
     )
 }
+
 
 export default UserRooms;

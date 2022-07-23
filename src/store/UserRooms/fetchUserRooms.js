@@ -2,12 +2,14 @@ import axios from "axios";
 import buildUrl from "../../utils/buildUrl";
 import { setFetchingUserRooms ,  setFetchingUserRoomsSuccesful, setFetchingUserRoomsFailure } from "./userRoomSlice";
 
-const fetchUserRooms = () => {  
+const fetchUserRooms = (pageNo) => {  
 
     return (dispatch,getState) => {
-        const url = buildUrl("room/get_user_room_data");
 
         dispatch(setFetchingUserRooms());
+
+        pageNo = pageNo ? pageNo : 1;
+        const url = buildUrl(`room/get_user_room_data/${pageNo}`);
 
         axios.post(url).then((res)=>{
             console.log("Response = ",res.data);

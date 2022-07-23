@@ -4,8 +4,15 @@ import fetchRooms from './fetchRooms';
 const initState = {
     loading : false,
     errMessage : null,
-
+    searchText : null,
     rooms : [],
+
+
+    start           : 0,
+    end             : 0,
+    currentPageNo   : 0,
+    totalPages      : 0,
+    totalResults    : 0,
 };
 
 const roomsSlice = createSlice({
@@ -20,7 +27,14 @@ const roomsSlice = createSlice({
         setFetchingRoomsSuccesful(state,action){
             state.loading = false;
             state.errMessage = null;
-            state.rooms = action.payload;
+            state.rooms = action.payload["data"];
+
+            state.start = action.payload["start"];
+            state.end = action.payload["end"];
+            state.currentPageNo = action.payload["pageNo"];
+            state.totalPages = action.payload["totalPages"];
+            state.totalResults = action.payload["total"];
+
             console.log("Rooms = ",state.rooms);
         },
 
@@ -28,6 +42,10 @@ const roomsSlice = createSlice({
             state.loading = false;
             state.errMessage = action.payload;
             state.rooms = [];
+        },
+
+        setSearchText(state,action){
+            state.searchText = action.payload;
         }
     }
 
@@ -35,6 +53,6 @@ const roomsSlice = createSlice({
 
 export {fetchRooms};
 
-export const {setFetchingRooms,setFetchingRoomsFailure,setFetchingRoomsSuccesful} = roomsSlice.actions;
+export const {setFetchingRooms,setFetchingRoomsFailure,setFetchingRoomsSuccesful, setSearchText} = roomsSlice.actions;
 
 export default roomsSlice.reducer;

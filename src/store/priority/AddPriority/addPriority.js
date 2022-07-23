@@ -1,4 +1,5 @@
 import axios from "axios";
+import toast from "react-hot-toast";
 import buildUrl from "../../../utils/buildUrl";
 import { addingPriority,addPrioritySuccess,addPriorityFailed  } from "./addPrioritySlice";
 
@@ -32,26 +33,35 @@ const addPriority = () =>{
             return;
         }
 
+        if(!priorityData.role_ids){
+            dispatch(addPriorityFailed('Please add role ids'));
+            return;
+        }
+
         const formdata = new FormData();
 
         formdata.append("name",priorityData.name);
         formdata.append("desc",priorityData.desc);
         formdata.append("priority_no",priorityData.priority_no);
         formdata.append("status",priorityData.status);
+        formdata.append("role_ids",priorityData.role_ids);
 
         axios.post(url,formdata).then((res)=>{
 
             if(res.status===200){
 
                 if(res.data["status"]==="success"){
+                    toast.success("Priority added succesfully");
                     dispatch(addPrioritySuccess(res.data["data"]));
                 }
                 else{
+                    toast.error(res.data["message"]);
                     dispatch(addPriorityFailed(res.data["message"]));
                 }
 
             }
             else{
+                toast.error("Failed to add priority");
                 dispatch(addPriorityFailed("Failed to add priority "+res.statusText));
             }
 

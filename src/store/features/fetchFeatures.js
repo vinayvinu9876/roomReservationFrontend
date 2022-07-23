@@ -2,14 +2,33 @@ import axios from "axios";
 import buildUrl from "../../utils/buildUrl";
 import { setFetchingFeatures, setFetchingFeaturesFailed,setFetchingFeaturesSuccess } from "./featuresSlice";
 
-const fetchFeatures = () =>{
+const fetchFeatures = (pageNo) =>{
 
     return (dispatch,getState)=>{
-        const url = buildUrl("features/read");
+
+        if(!pageNo){
+            pageNo = 1;
+        }
+
+        const payload = {
+            "search" : null,
+            "status" : null,
+        };
+
+        if(getState().features.search){
+            payload["search"] = getState().features.search;
+        }
+
+        if(getState().features.status){
+            payload["status"] = getState().features.status;
+        }
+        
+        const url = buildUrl(`features/read/${pageNo}`);
 
         dispatch(setFetchingFeatures());
 
-        axios.post(url).then((res)=>{
+        axios.post(url,payload).then((res)=>{
+            console.log("response = ",res);
             if(res.status===200){
 
                 console.log("Response data = ",res.data);

@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import viewRoom from './actions/viewRoom';
 import removeRoomImage from './actions/removeRoomImage';
+import updateRoomFeature from './actions/updateRoomFeature';
 import addImage from './actions/addImage';
 
 const initState = {
@@ -142,6 +143,21 @@ const viewRoomSlice = createSlice({
         addingRoomDownTimeFailure(state,action){
             state.loading = false;
             state.errMessage = action.payload;
+        },
+
+        updatingRoomFeature(state,action){
+            state.loading = true;
+            state.errMessage = null;
+        },
+
+        updatingRoomFeatureFailed(state,action){
+            state.loading = false;
+            state.errMessage = action.payload;
+        },
+
+        updatingRoomFeatureSuccess(state,action){
+            state.loading = false;
+            state.errMessage = null;
         }
     }
 
@@ -150,7 +166,8 @@ const viewRoomSlice = createSlice({
 export {
             viewRoom,
             removeRoomImage,
-            addImage
+            addImage,
+            updateRoomFeature
        };
 
 export const {
@@ -185,7 +202,11 @@ export const {
 
     addingRoomDownTime,
     addingRoomDownTimeFailure,
-    addingRoomDownTimeSuccess
+    addingRoomDownTimeSuccess,
+
+    updatingRoomFeature,
+    updatingRoomFeatureFailed,
+    updatingRoomFeatureSuccess
 
 } = viewRoomSlice.actions;
 

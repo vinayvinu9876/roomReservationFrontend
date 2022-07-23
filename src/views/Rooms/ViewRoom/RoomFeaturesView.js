@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Card,CardHeader,CardBody,ButtonGroup,Button, FormInput } from "shards-react";
 import { useDispatch, useSelector } from "react-redux";
 import SelectFeatureList from "../AddRoom/roomFeatures/SelectFeatureList";
+import { updateRoomFeature } from "../../../store/rooms/viewRoom/viewRoomSlice";
 import deleteRoomFeature from "../../../store/rooms/viewRoom/actions/deleteRoomFeature";
 import addFeature from "../../../store/rooms/viewRoom/actions/addFeature";
 
@@ -46,10 +47,12 @@ const RoomFeatureView = ({room_id}) =>{
                                             <td>
                                             <ButtonGroup className="mb-3">
                                                     <Button 
+                                                        onClick={()=>{dispatch(updateRoomFeature(room_id,val["id"],1)) }}
                                                         theme="primary">
                                                             <i className="material-icons mr-1">add</i>
                                                     </Button>
                                                     <Button 
+                                                        onClick={()=>{dispatch(updateRoomFeature(room_id,val["id"],-1)) }}
                                                         theme="white">
                                                             <i className="material-icons mr-1">remove</i>
                                                     </Button>

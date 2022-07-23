@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import fetchPriority from './fetchPriority';
+import editPriority from './EditPriority';
 
 const initialState = {
     loading : false,
@@ -29,13 +30,27 @@ const prioritySlice = createSlice({
             state.loading = false;
             state.errMessage = action.payload;
             state.priorityData = [];
+        },
+
+        editingPriority(state,action){
+            state.loading = true;
+            state.errMessage = null;
+        },
+
+        editingPrioritySuccess(state,action){
+            state.loading = false;
+        },
+
+        editingPriorityFailure(state,action){
+            state.loading = false;
         }
     }
 
 });
 
-export {fetchPriority};
+export {fetchPriority, editPriority};
 
+export const {editingPriority,editingPriorityFailure,editingPrioritySuccess} = prioritySlice.actions;
 export const {fetchingPriority,fetchingPrioritySuccess,fetchingPriorityFailed} = prioritySlice.actions;
 
 export default prioritySlice.reducer;

@@ -13,7 +13,7 @@ const userRoomViewSlice = createSlice({
 
     reducers : {
         setFetchingUserRoomViewData(state,action){
-            state.loading = false;
+            state.loading = true;
             state.errMessage = null;
             state.roomData =  null;
         },

@@ -43,6 +43,8 @@ const RoomScheduleCalendar = ({room_id, roomDownTime}) => {
                             slotMaxTime={"21:00:00"}
                             events={events}
                             selectAllow={false}
+                            eventClick={(info)=>{console.log(info)}}
+                            eventMouseEnter={(mouseEnterInfo)=>{console.log("Mouse enter info = ",mouseEnterInfo);}}
                         />
                     </CardBody>
                 </Card>
@@ -71,7 +73,8 @@ function getReservedDataAsEvents(roomReservationData){
             {
                 title: `${meeting_title} by ${headed_by}`, 
                 start: new Date(start_timestamp).toISOString(),
-                end :new Date(end_timestamp).toISOString()
+                end :new Date(end_timestamp).toISOString(),
+                eventColor : 'blue'
             }
         )
     });
@@ -109,7 +112,9 @@ function getRoomDownTimeEvents(roomDownTime) {
             events.push({
                 title: desc, 
                 start: newStart.toISOString(),
-                end :newEnd.toISOString()
+                end :newEnd.toISOString(),
+                eventColor : "red",
+                eventClick : ()=>{console.log("Event clicked");}
             })
         }
     });

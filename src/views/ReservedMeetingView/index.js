@@ -6,6 +6,8 @@ import { useDispatch,useSelector } from 'react-redux';
 import { getReservedMeetingList } from '../../store/reservedMeetingList/reservedMeetingListSlice';
 import Pagination from '../../components/Pagination/pagination';
 import SearchBar from './searchBar';
+import {cancelMeeting} from '../../store/reservedMeetingList/reservedMeetingListSlice';
+import  { Toaster } from 'react-hot-toast';
 
 const ReservedMeetingView = () =>{
 
@@ -31,7 +33,7 @@ const ReservedMeetingView = () =>{
             <Row noGutters className="page-header py-4">
                 <PageTitle sm="4" title={"Meeting List"} subtitle={"Manage"} className="text-sm-left" />
             </Row>
-
+            <Toaster />
             {/* Default Light Table */}
             <Row>
                 <Col>
@@ -70,6 +72,9 @@ const ReservedMeetingView = () =>{
                                     </th>
                                     <th scope="col" className="border-0">
                                         Organized By
+                                    </th>  
+                                    <th scope="col" className="border-0">
+                                        Reserved By
                                     </th>                                    
                                     <th scope="col" className="border-0">
                                         Date
@@ -88,16 +93,23 @@ const ReservedMeetingView = () =>{
                             <tbody>
                                 {
                                     meetingList.map((val,index)=>{
+                                        let reservation_id = val["reservation_id"];
                                         return (
                                             <tr>
                                                 <td>{startIndex+index}</td>
                                                 <td>{val["room_name"]}</td>
                                                 <td>{val["meeting_title"]}</td>
                                                 <td>{val["headed_by"]}</td>
+                                                <td>{val["reserved_by_name"]} <br /> {val["reserved_by_email"]}</td>
                                                 <td>{new Date(val["start_timestamp"]).toDateString()}</td>
                                                 <td>{new Date(val["start_timestamp"]).toLocaleTimeString([],{hour: '2-digit', minute:'2-digit'})} to {new Date(val["end_timestamp"]).toLocaleTimeString([],{hour: '2-digit', minute:'2-digit'})}</td>
-                                                <td>{val["status"]}</td>
-                                                <td><Button theme="primary">Cancel</Button></td>
+                                                <td style={val["status"]==="cancelled"?{color:"red"}:{}}>{val["status"]}</td>
+                                                <td>
+                                                    {
+                                                        (new Date() < new Date(val["start_timestamp"])) && (val["status"]!=="cancelled") &&
+                                                        <Button theme="primary" onClick={()=>{dispatch(cancelMeeting(reservation_id))}}>Cancel</Button>
+                                                    }
+                                                </td>
                                             </tr>
                                         )
                                     })

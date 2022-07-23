@@ -7,6 +7,10 @@ import RoomImagesView from './RoomImagesView';
 import { useDispatch, useSelector } from 'react-redux';
 import { viewRoom } from '../../../store/rooms/viewRoom/viewRoomSlice';
 import RoomDataView from './RoomDataView';
+import RoomScheduleCalendar from '../../UserRoomView/RoomScheduleCalendar';
+import {AtomSpinner} from 'react-epic-spinners';
+import  { Toaster } from 'react-hot-toast';
+
 
 const ViewRoom = () =>{
 
@@ -26,7 +30,9 @@ const ViewRoom = () =>{
     },[]);
 
     const roomData = useSelector(state=>state.viewRoom.room_data);
+    const loading = useSelector(state=>state.viewRoom.loading);
     const errMessage = useSelector(state=>state.viewRoom.errMessage);
+    const roomDownTime = useSelector(state=>state.viewRoom.room_down_time);
 
     console.log("room data = ",roomData);
 
@@ -35,13 +41,22 @@ const ViewRoom = () =>{
             <Row noGutters className="page-header py-4">
                 <PageTitle sm="4" title="Room" subtitle="View" className="text-sm-left" />
             </Row>
+
+            {
+                loading &&
+                <div style={{width:"100%",height:"200px",alignContent:"center",padding:"15px"}}>
+                    <center><AtomSpinner color={"blue"} /></center>
+                </div>
+            }
             {
                 (errMessage!==null) &&
                 <p style={{color:"red"}}>{errMessage}</p>
             }
-            
+            {
+            (!loading) &&
+            <>
             <RoomDataView room_id={room_id} />
-
+            <Toaster />
             <Row>
                 <Col>
                     <RoomImagesView room_id={room_id}/>
@@ -57,6 +72,13 @@ const ViewRoom = () =>{
                     <RoomDownTimeView room_id={room_id}/>
                 </Col>
             </Row>
+            <Row>
+                <Col>
+                    {room_id && roomData && <RoomScheduleCalendar room_id={room_id} roomDownTime={roomDownTime}/>}
+                </Col>
+            </Row>
+            </>
+            }
             
             {
                 (errMessage!==null) &&

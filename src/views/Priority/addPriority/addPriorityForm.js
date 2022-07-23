@@ -22,6 +22,7 @@ const AddPriorityForm = ()=>{
 
     const name = useSelector(state=>state.addPriority.name);
     const desc = useSelector(state=>state.addPriority.desc);
+    const role_ids = useSelector(state=>state.addPriority.role_ids);
     const priority_no = useSelector(state=>state.addPriority.priority_no);
     const status = useSelector(state=>state.addPriority.status);
 
@@ -57,6 +58,17 @@ const AddPriorityForm = ()=>{
                         value={desc}
                         onChange={(evt) => {
                             dispatch(setFieldValue({fieldName:"desc",value:evt.target.value}));
+                        }}
+                    />
+                </FormGroup>
+                <FormGroup>
+                    <label>Role IDs</label>
+                    <FormInput
+                        type="text"
+                        placeholder="Role IDs"
+                        value={role_ids}
+                        onChange={(evt) => {
+                            dispatch(setFieldValue({fieldName:"role_ids",value:evt.target.value}));
                         }}
                     />
                 </FormGroup>

@@ -10,6 +10,7 @@ const initState = {
     desc : null,
     priority_no : null,
     status : null,
+    role_ids : null,
 };
 
 const addPrioritySlice = createSlice({
@@ -40,11 +41,22 @@ const addPrioritySlice = createSlice({
                 case "desc" : state.desc = action.payload.value;break;
                 case "priority_no" : state.priority_no = action.payload.value;break;
                 case "status"   :   state.status = action.payload.value;break;
+                case "role_ids" :   state.role_ids = validateRoleIds(action.payload.value);break;
                 default         :   console.log("Invalid field name");break;
             }
         }
     }
 });
+
+const validateRoleIds = (role_ids) => {
+    if(role_ids){
+        if(isNaN(role_ids[role_ids.length-1]) && (role_ids[role_ids.length-1]!==',') ){
+            return role_ids.substring(0,role_ids.length-1);
+        }
+    }
+
+    return role_ids;
+}
 
 export {addPriority};
 

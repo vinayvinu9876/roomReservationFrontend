@@ -1,9 +1,13 @@
-import React, { useEffect } from "react";
-import {  Button } from "shards-react";
+import React, { useEffect} from "react";
+import {Container,Row,Col,Card,CardHeader,CardBody, Button, FormInput, FormSelect } from "shards-react";
+import PageTitle from "../../components/common/PageTitle";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchFeatures } from '../../store/features/featuresSlice';
-import CustomTablePage from "../../components/table";
+import { fetchFeatures, setSearch, setStatus } from '../../store/features/featuresSlice';
 import { Link } from "react-router-dom";
+import { AtomSpinner } from "react-epic-spinners";
+import {Toaster} from 'react-hot-toast';
+import EditFeatureModal from "./editFeature";
+import Pagination from '../../components/Pagination/pagination';
 
 const Features = () =>{
 
@@ -13,73 +17,44 @@ const Features = () =>{
   const errMessage = useSelector(state=>state.features.errMessage);
   const featureData = useSelector(state=>state.features.featuresData);
 
+  const start = useSelector(state=>state.features.start);
+  const end = useSelector(state=>state.features.end);
+  const totalResults = useSelector(state=>state.features.totalResults);
+  const pageNo = useSelector(state=>state.features.pageNo);
+  const totalPages = useSelector(state=>state.features.totalPages);
+
   useEffect(()=>{ 
     dispatch(fetchFeatures());
   },[]);
 
-  const columns = [
-    {
-      name : "#",
-      selector : row => row.id,
-      sortable : false
-    },
-    {
-        name: 'Feature name',
-        selector: row => row.feature_name,
-        sortable: true,
-        sortField: 'feature_name',
-    },
-    {
-        name: 'Description',
-        selector: row => row.feature_desc,
-        sortable: true,
-        sortField: 'capacity',
-    },
-    {
-        name: 'Total Available',
-        selector: row => row.total_available,
-        sortable: true,
-        sortField: 'total_available',
-    },
-    {
-        name: 'Status',
-        selector: row => row.status,
-        sortable: true,
-        sortField: 'status',
-    },
-    {
-      name : "Updated on",
-      selector : row => row.updated_at,
-      sortable : true,
-      sortField : "updated_at"
+  const getStatusColor = (status) => {
+
+    switch (status) {
+      case "active":
+        return "green";
+      case "maintenance":
+        return "orange";
+      case "permanently_unavailable":
+        return "red";
+      default:
+        return "black";
     }
-];
 
-
-  console.log("Feature data at view = ",featureData);
+  }
 
   return (
-
-    <CustomTablePage 
-    pageName={"Features"}
-    loading={loading}
-    errMessage={errMessage}
-    columns={columns}
-    data={featureData}
-    child={<Link to="/addFeature"><Button>Add Feature</Button></Link>}
-
-    />
-    /*
   <Container fluid className="main-content-container px-4">
     <Row noGutters className="page-header py-4">
       <PageTitle sm="4" title="Features" subtitle="Manage" className="text-sm-left" />
     </Row>
-
+    
+    <Toaster />
     <Row>
       <Col>
         <div style={{marginBottom:"10px"}}>
-          <Link to="/addRoom"><Button>Add New Feature</Button></Link>
+          <Link to="/addFeature"><Button>Add New Feature</Button></Link>
         </div>
+        <SearchBar />
         <Card small className="mb-4">
           <CardHeader className="border-bottom">
             <h6 className="m-0">Features</h6>
@@ -101,13 +76,8 @@ const Features = () =>{
 
               (!loading) && (!errMessage) &&
 
-              <DataTable
-                columns={columns}
-                data={featureData}
-                className="table mb-0"
-              />
               
-            /*<table className="table mb-0">
+            <table style={{overflowY:'scroll',overflowX:"scroll"}} className="table mb-0">
               
               <thead className="bg-light">
                 <tr>
@@ -115,34 +85,40 @@ const Features = () =>{
                     #
                   </th>
                   <th scope="col" className="border-0">
-                    Room Name
+                    Feature Name
                   </th>
                   <th scope="col" className="border-0">
-                    Capacity
+                    Description
+                  </th>
+                  <th scope="col" className="border-0">
+                    Total Available
+                  </th>
+                  <th scope="col" className="border-0">
+                    Updated at
                   </th>
                   <th scope="col" className="border-0">
                     Status
                   </th>
                   <th scope="col" className="border-0">
-                    Last Updated
-                  </th>
-                  <th scope="col" className="border-0">
-                    View
+                    Edit
                   </th>
                 </tr>
               </thead>
               <tbody>
                 
                 {
-                  roomsData.map((val,index)=>{
+                  featureData.map((val,index)=>{
                     return (
                       <tr>
-                        <td>{index+1}</td>
-                        <td>{val["room_name"]}</td>
-                        <td>{val["room_capacity"]}</td>
-                        <td>{val["status"]}</td>
+                        <td>{start+index}</td>
+                        <td>{val["feature_name"]}</td>
+                        <td>{val["feature_desc"]}</td>
+                        <td>{val["total_available"]}</td>
                         <td>{val["updated_at"]}</td>
-                        <td><Button>View</Button></td>
+                        <td style={{textTransform:"capitalize",color:getStatusColor(val["status"])}}>
+                          {val["status"].split("_").join(" ")}
+                        </td>
+                        <td><EditFeatureModal featureData={val}/></td>
                       </tr>
                     )
                   })
@@ -153,12 +129,63 @@ const Features = () =>{
           }
           </CardBody>
         </Card>
+        <Pagination   
+          start={start}
+          end={end}
+          activePageNo={parseInt(pageNo)}
+          totalResults={totalResults}
+          totalPages={parseInt(totalPages)}
+          onPageClick={(pageno)=>{
+            dispatch(fetchFeatures(pageno));
+          }}
+        />
       </Col>
     </Row>
 
     
-  </Container>*/
+  </Container>
   );
 }
+
+const SearchBar = () =>{
+
+  const dispatch = useDispatch();
+  const status = useSelector(state=>state.features.status);
+  const search = useSelector(state=>state.features.search);
+
+  return (
+    <Row style={{paddingBottom:"20px",marginTop:"15px"}}>
+      <Col lg={4} md={4} sm={12} xs={12}>
+        <label>Search</label>
+        <FormInput type="text" 
+                    value={search}
+                    placeholder="Search.."
+                    onChange={
+                      (evt)=>{
+                        dispatch(setSearch(evt.target.value))
+                      }
+                    } 
+        />
+      </Col>
+      <Col lg={4} md={4} sm={12} xs={12}>
+        <label>Status</label>
+        <FormSelect value={status} onChange={(evt)=>{ dispatch(setStatus(evt.target.value))}}>
+            <option value={null}>Choose ...</option>
+            <option value="active">Active</option>
+            <option value="maintenance">Under Maintenance</option>
+            <option value="permanently_unavailable">Permanently Unavailable</option>
+        </FormSelect> 
+      </Col>
+      <Col lg={2} md={2} xs={12} sm={12} style={{marginTop:"30px"}}>
+        <Button theme="primary" onClick={()=>{ dispatch(fetchFeatures(1)) }  }>
+          <i class="material-icons">search</i>
+        </Button>
+      </Col>
+    </Row>
+  );
+
+}
+
+
 
 export default Features;
