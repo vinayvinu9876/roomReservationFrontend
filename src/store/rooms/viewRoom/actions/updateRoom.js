@@ -16,6 +16,7 @@ const updateRoom = (room_id,payload) =>{
         console.log("url = ",url);
 
         const formdata = new FormData();
+        formdata.append("authToken" , `Bearer ${getState().authenticate_user.auth_token}`);
 
         Object.keys(payload).forEach((key)=>{
             formdata.append(key,payload[key]);

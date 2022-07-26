@@ -106,20 +106,30 @@ function getRoomDownTimeEvents(roomDownTime) {
 
         for(let i=0;i<dates.length;i++){
 
+            console.log("Date = ",dates[i]);
+            console.log("Start hour = ",startHour," start min =  ",startMin);
+
             let newStart = setHoursAndMinutes(dates[i],startHour,startMin);
             let newEnd   = setHoursAndMinutes(dates[i],endHour,endMin);
-            
-            events.push({
-                title: desc, 
-                start: newStart.toISOString(),
-                end :newEnd.toISOString(),
-                eventColor : "red",
-                eventClick : ()=>{console.log("Event clicked");}
-            })
+
+            console.log("New start = ",newStart," New end = ",newEnd);
+            if(isValidDate(newStart) && isValidDate(newEnd)){
+                events.push({
+                    title: desc, 
+                    start: newStart.toISOString(),
+                    end :newEnd.toISOString(),
+                    eventColor : "red",
+                    eventClick : ()=>{console.log("Event clicked");}
+                });
+            }
         }
     });
 
     return events;
+}
+
+const isValidDate = function(date) {
+    return (new Date(date) !== "Invalid Date") && !isNaN(new Date(date));
 }
 
 function setHoursAndMinutes(date,hours,minutes){

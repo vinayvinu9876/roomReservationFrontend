@@ -10,8 +10,12 @@ const deleteRoomDowntime = (room_id,down_time_id) => {
         dispatch(removingRoomDownTime());
 
         const url = buildUrl(`roomdowntime/delete/${down_time_id}`);
+        
+        const payload = {
+            "authToken" : `Bearer ${getState().authenticate_user.auth_token}`
+        };
 
-        axios.post(url).then((res)=>{   
+        axios.post(url,payload).then((res)=>{   
 
             if(res.status===200){
 

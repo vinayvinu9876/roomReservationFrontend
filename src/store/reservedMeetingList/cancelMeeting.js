@@ -21,7 +21,11 @@ const cancelMeeting = (reservation_id) => {
 
         const url = buildUrl(`room/cancel_meeting/${reservation_id}`);
 
-        axios.get(url).then((res)=>{
+        const payload = {
+            "authToken" : `Bearer ${getState().authenticate_user.auth_token}`
+        };
+
+        axios.get(url,payload).then((res)=>{
             console.log("Cancel response = ",res.data);
             if(res.status===200){
                 if(res.data["status"]==="success"){

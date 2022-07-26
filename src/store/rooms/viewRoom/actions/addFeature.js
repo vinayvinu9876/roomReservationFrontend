@@ -18,6 +18,7 @@ const addFeature  = (feature_id,room_id,total_items) =>{
         formdata.append("room_id",room_id);
         formdata.append("total_available",total_items);
         formdata.append("status","active"); // constant
+        formdata.append("authToken" , `Bearer ${getState().authenticate_user.auth_token}`);
 
         axios.post(url,formdata).then((res)=>{
             console.log("status code = ",res.status," Status text = ",res.statusText);

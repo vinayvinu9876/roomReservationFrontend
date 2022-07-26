@@ -13,6 +13,7 @@ const fetchFeatures = (pageNo) =>{
         const payload = {
             "search" : null,
             "status" : null,
+            "authToken" : `Bearer ${getState().authenticate_user.auth_token}`
         };
 
         if(getState().features.search){

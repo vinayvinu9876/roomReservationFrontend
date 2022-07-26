@@ -125,6 +125,10 @@ const SearchBar = () => {
     <Row style={{marginBottom:15}}>
         <Col>
           <Row>
+            
+          <Col md={2} lg={2} sm={4} xs={4} style={{paddingTop:"30px"}}>
+                  <Link to="/addRoom"><Button theme="primary">Add Room</Button></Link>
+            </Col>
             <Col md={4} lg={4} sm={8} xs={8} >
               <label>Search</label>
               <FormInput type="text" placeholder="Search..." onChange={(evt)=>{dispatch(setSearchText(evt.target.value))}} />

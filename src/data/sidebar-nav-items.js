@@ -1,11 +1,31 @@
-export default function() {
+//import store from '../store/store';
+export default function(isAdmin=false) {
+  console.log('Is admin = ',isAdmin);
+ // console.log("Is admin = ",store.getState().authenticate_user.is_admin);
+  //if(!store.getState().authenticate_user.is_admin){
+  if(!isAdmin){
+    return [
+      {
+        title : "User Rooms",
+        to : "/user-rooms",
+        htmlBefore : "<i class='material-icons'>edit</i>",
+        htmlAfter : ""
+      },
+      {
+        title : "Meeting List",
+        to : "/reservedMeetingView",
+        htmlBefore : "<i class='material-icons'>edit</i>",
+        htmlAfter : ""
+      },
+    ];
+  }
   return [
-    {
+    /*{
       title: "Blog Dashboard",
       to: "/blog-overview",
       htmlBefore: '<i class="material-icons">edit</i>',
       htmlAfter: ""
-    },
+    },*/
     {
       title: "Rooms",
       to: "/rooms",
@@ -36,6 +56,7 @@ export default function() {
       htmlBefore: '<i class="material-icons">edit</i>',
       htmlAfter: "" 
     },
+    /*
     {
       title: "Blog Posts",
       htmlBefore: '<i class="material-icons">vertical_split</i>',
@@ -65,6 +86,6 @@ export default function() {
       title: "Errors",
       htmlBefore: '<i class="material-icons">error</i>',
       to: "/errors",
-    }
+    }*/
   ];
 }

@@ -8,8 +8,12 @@ const fetchRoomsSchedule = (room_id) =>{
         const url = buildUrl(`room/getRoomReservationData/${room_id}`);
         
         dispatch(setFetchingRoomScheduleData());
+
+        const payload = {
+            "authToken" : `Bearer ${getState().authenticate_user.auth_token}`
+        };
         
-        axios.post(url).then((res)=>{
+        axios.post(url,payload).then((res)=>{
             console.log("Status = ",res.status);
             console.log("Data = ",res.data);
 

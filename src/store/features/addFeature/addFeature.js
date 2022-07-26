@@ -41,6 +41,7 @@ const addFeature = () =>{
         formdata.append("feature_desc",featureData.feature_desc);
         formdata.append("total_available",featureData.total_available);
         formdata.append("status",featureData.status);
+        formdata.append("authToken",`Bearer ${getState().authenticate_user.auth_token}`);
         
 
         axios.post(url,formdata).then((res)=>{

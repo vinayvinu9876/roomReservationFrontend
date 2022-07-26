@@ -36,7 +36,8 @@ const editFeature = (feature_id,feature_name,feature_desc,total_available,status
             "feature_name" : feature_name,
             "feature_desc": feature_desc,
             "total_available" : total_available,
-            "status" : status
+            "status" : status,
+            "authToken" : `Bearer ${getState().authenticate_user.auth_token}`
         }
 
         axios.post(url,payload).then((res)=>{

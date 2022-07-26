@@ -4,17 +4,21 @@ import { setFetchingUserRooms ,  setFetchingUserRoomsSuccesful, setFetchingUserR
 
 const fetchUserRooms = (pageNo) => {  
 
-    return (dispatch,getState) => {
+    return (dispatch,getState) => { 
 
         dispatch(setFetchingUserRooms());
 
         pageNo = pageNo ? pageNo : 1;
         const url = buildUrl(`room/get_user_room_data/${pageNo}`);
 
-        axios.post(url).then((res)=>{
+        let payload = {
+            "authToken" : `Bearer ${getState().authenticate_user.auth_token}`
+        };
+
+        axios.post(url,payload).then((res)=>{
             console.log("Response = ",res.data);
 
-            if(res.status === 200){
+            if(res.status === 200){ 
                 if(res.data["status"]==="success"){
                     dispatch(setFetchingUserRoomsSuccesful(JSON.parse(res.data["data"])));
                 }

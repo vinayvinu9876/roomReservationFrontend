@@ -38,7 +38,7 @@ class Store extends EventEmitter {
   }
 
   getSidebarItems() {
-    return _store.navItems;
+    return getSidebarNavItems();
   }
 
   addChangeListener(callback) {

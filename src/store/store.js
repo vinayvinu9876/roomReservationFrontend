@@ -11,6 +11,7 @@ import userRoomViewSlice from './UserRoomView/userRoomViewSlice';
 import roomScheduleSlice from './roomSchedule/roomScheduleSlice';
 import addRoomReservationSlice from './addRoomReservation/addRoomReservationSlice';
 import reservedMeetingListSlice from './reservedMeetingList/reservedMeetingListSlice';
+import authenticate_user_slice from './authenticateUser/authenticate_user_slice';
 
 export default configureStore({
     reducer: {
@@ -30,6 +31,7 @@ export default configureStore({
       "roomSchedule" : roomScheduleSlice,
       "addRoomReservation" : addRoomReservationSlice,
 
-      "reservedMeetingList" : reservedMeetingListSlice
+      "reservedMeetingList" : reservedMeetingListSlice,
+      "authenticate_user" : authenticate_user_slice
     }
 });

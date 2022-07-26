@@ -1,47 +1,44 @@
 import React from "react";
 import { Nav } from "shards-react";
-
 import SidebarNavItem from "./SidebarNavItem";
-import { Store } from "../../../flux";
+import { useSelector } from "react-redux";
 
-class SidebarNavItems extends React.Component {
-  constructor(props) {
-    super(props)
+const SidebarNavItems = () =>{
 
-    this.state = {
-      navItems: Store.getSidebarItems()
-    };
+  let navItems = useSelector(state=>state.authenticate_user.navItems);
 
-    this.onChange = this.onChange.bind(this);
+  //let [navItems,setNavItems] = useState(Store.getSidebarItems());
+
+  //const isAdmin = useSelector(state=>state.authenticate_user.is_admin);
+
+  /*
+  if(isAdmin){
+    console.log("User is admin. Reredenring");
+    setNavItems(getSideBarNavItems(isAdmin));
   }
+  */
 
-  componentWillMount() {
-    Store.addChangeListener(this.onChange);
-  }
+  /*
+  useEffect(()=>{
+    Store.addChangeListener(setNavItems);
+    return ()=>{
+      Store.removeChangeListener(setNavItems);
+    }
+  },[]);
+  */
 
-  componentWillUnmount() {
-    Store.removeChangeListener(this.onChange);
-  }
+  return (
+    <div className="nav-wrapper">
+      <Nav className="nav--no-borders flex-column">
+      {navItems.map((item, idx) => (
+        <SidebarNavItem key={idx} item={item} />
+      ))}
+      </Nav>
+    </div>
+  )
 
-  onChange() {
-    this.setState({
-      ...this.state,
-      navItems: Store.getSidebarItems()
-    });
-  }
 
-  render() {
-    const { navItems: items } = this.state;
-    return (
-      <div className="nav-wrapper">
-        <Nav className="nav--no-borders flex-column">
-          {items.map((item, idx) => (
-            <SidebarNavItem key={idx} item={item} />
-          ))}
-        </Nav>
-      </div>
-    )
-  }
 }
+
 
 export default SidebarNavItems;

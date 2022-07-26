@@ -22,7 +22,11 @@ const removeRoomImage = (room_id,media_id) => {
 
         const url = buildUrl(`room/removeImage/${room_id}/${media_id}`);
 
-        return axios.post(url).then((res)=>{
+        const payload = {
+            "authToken" : `Bearer ${getState().authenticate_user.auth_token}`
+        };
+
+        return axios.post(url,payload).then((res)=>{
 
             if(res.status===200){
                 if(res.data["status"]==="success"){

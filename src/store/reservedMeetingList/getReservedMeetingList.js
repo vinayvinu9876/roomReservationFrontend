@@ -16,12 +16,13 @@ const getReservedMeetingList = (pageNo) => {
             start : new Date(start).getTime()/1000,
             end : new Date(end).getTime()/1000,
             room_id,
-            sort : sort ? parseInt(sort) : 2
+            sort : sort ? parseInt(sort) : 2,
+            "authToken" : `Bearer ${getState().authenticate_user.auth_token}`
         };
 
         console.log("Payload = ",payload);
 
-        const url = buildUrl(`roomreservation/get_meeting_list_for_admin/${pageNo}`);
+        const url = buildUrl(`roomreservation/get_meeting_list/${pageNo}`);
 
         dispatch(setFetchingMeetingList());
 

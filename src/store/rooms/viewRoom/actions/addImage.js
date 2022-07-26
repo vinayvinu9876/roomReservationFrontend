@@ -18,6 +18,7 @@ const addImage = (room_id,imageData) =>{
         var formdata = new FormData();
 
         formdata.append("image",payload.image);
+        formdata.append("authToken" , `Bearer ${getState().authenticate_user.auth_token}`);
 
         axios.post(url,formdata).then((res)=>{
             console.log("response code = ",res.status);

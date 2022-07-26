@@ -77,7 +77,7 @@ const UserRooms = () => {
                             roomsData.map((val,index)=>{
 
                                 return (
-                                    <tr>
+                                    <tr key={"roomData"+index}>
                                         <td>{start+index}</td>
                                         <td>{val["room_name"]}</td>
                                         <td>{val["room_capacity"]}</td>

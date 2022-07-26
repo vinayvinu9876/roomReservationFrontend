@@ -22,6 +22,7 @@ const addRoomDownTime = (room_id,day,start,end,description) => {
         formdata.append("end",end);
         formdata.append("desc",description);
         formdata.append("status","active");
+        formdata.append("authToken" , `Bearer ${getState().authenticate_user.auth_token}`);
 
         axios.post(url,formdata).then((res)=>{
             console.log("Resposne status = ",res.status," Status text = ",res.statusText);

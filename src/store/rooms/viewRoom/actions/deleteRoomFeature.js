@@ -24,7 +24,11 @@ const deleteRoomFeature = (room_id,room_feature_id) => {
 
         console.log("Url = ",url);
 
-        axios.post(url).then((res)=>{
+        const payload = {
+            "authToken" : `Bearer ${getState().authenticate_user.auth_token}`
+        };
+
+        axios.post(url,payload).then((res)=>{
             console.log("status = ",res.status," Status text = ",res.statusText);
             if(res.status===200){
                 console.log("response = ",res.data);

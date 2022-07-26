@@ -23,7 +23,8 @@ const updateRoomFeature = (room_id,room_feature_id,value) => {
 
         const payload = { 
             room_feature_id : room_feature_id,
-            value
+            value,
+            "authToken" : `Bearer ${getState().authenticate_user.auth_token}`
         };  
 
         axios.post(url,payload).then((res)=>{

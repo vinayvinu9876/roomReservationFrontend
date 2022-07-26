@@ -19,7 +19,9 @@ const addRoom = () => {
 
             room_images : state.room_images,
             room_features : state.room_features,
-            room_down_time : state.room_down_time
+            room_down_time : state.room_down_time,
+
+            "authToken" : `Bearer ${getState().authenticate_user.auth_token}`
         };
 
         console.log("Payload=  ",payload);

@@ -35,7 +35,7 @@ class SidebarMainNavbar extends React.Component {
                 id="main-logo"
                 className="d-inline-block align-top mr-1"
                 style={{ maxWidth: "150px" }}
-                src={"https://indianmoney.com/images/indianmoney-logo.png?t=3"}
+                src={"https://ffreedom.com/assets/images/ffreedom-app-logo.png"}
                 alt="Shards Dashboard"
               />
               {/*

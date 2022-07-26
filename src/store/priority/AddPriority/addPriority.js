@@ -45,6 +45,7 @@ const addPriority = () =>{
         formdata.append("priority_no",priorityData.priority_no);
         formdata.append("status",priorityData.status);
         formdata.append("role_ids",priorityData.role_ids);
+        formdata.append("authToken", `Bearer ${getState().authenticate_user.auth_token}`);
 
         axios.post(url,formdata).then((res)=>{
 

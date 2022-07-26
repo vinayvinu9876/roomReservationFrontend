@@ -43,7 +43,8 @@ const editPriority = ({id,role_ids,priority_no,name,desc,status}) =>{
             desc : desc,
             priority_no : priority_no,
             role_ids : role_ids,
-            status : status 
+            status : status ,
+            "authToken" : `Bearer ${getState().authenticate_user.auth_token}`
         };
 
         console.log("Payload = ",payload);

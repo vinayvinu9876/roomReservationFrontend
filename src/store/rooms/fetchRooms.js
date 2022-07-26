@@ -12,7 +12,8 @@ const fetchRooms = (pageNo) =>{
         }
 
         const payload = {
-            searchText : searchText ? searchText : null
+            searchText : searchText ? searchText : null,
+            "authToken" : `Bearer ${getState().authenticate_user.auth_token}`
         };
 
         const url = buildUrl(`room/get_admin_rooms/${pageNo}`);

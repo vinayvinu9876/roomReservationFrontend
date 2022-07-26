@@ -11,7 +11,11 @@ const fetchPriority = () =>{
 
         const url = buildUrl("priority/read");
 
-        axios.post(url).then((res)=>{
+        const payload = {
+            "authToken" : `Bearer ${getState().authenticate_user.auth_token}`
+        };
+
+        axios.post(url,payload).then((res)=>{
 
             if(res.status===200){
                 console.log("Result = ",res.data);

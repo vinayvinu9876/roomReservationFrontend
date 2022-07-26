@@ -67,7 +67,9 @@ const addReservation = ({room_id=null,meetingTitle=null,organizedBy=null,meeting
             no_of_attendees         : noOfAttendees,
             reserved_by_email       : 'abc@notprovided.com',
             meeting_title           : meetingTitle,
-            headed_by               : organizedBy
+            headed_by               : organizedBy,
+
+            "authToken" : `Bearer ${getState().authenticate_user.auth_token}`
         };
 
         const url = buildUrl("roomreservation/reserve");
