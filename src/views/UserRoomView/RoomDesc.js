@@ -12,7 +12,7 @@ const RoomDesc = ({room_id,room_desc}) => {
             <Col md={12} lg={12} xs={12} sm={12} style={{marginTop:"15px",marginBottom:"15px"}}>
                 <Card>
                     <CardHeader className="border-bottom">
-                        <h6 className="m-0">{room_id} Room</h6>
+                        <h6 className="m-0">Room Details</h6>
                     </CardHeader>
                     <CardBody dangerouslySetInnerHTML={{__html: room_desc}}>
                     </CardBody>

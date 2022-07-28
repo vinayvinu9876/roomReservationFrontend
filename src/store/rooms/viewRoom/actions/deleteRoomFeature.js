@@ -1,5 +1,6 @@
 import axios from "axios";
 import buildUrl from "../../../../utils/buildUrl";
+import checkIfAuthFailed from "../../../../utils/onAuthFailed";
 import { removingImageSuccess, removingRoomFeature, removingRoomFeatureFailed } from "../viewRoomSlice";
 import viewRoom from "./viewRoom";
 
@@ -38,6 +39,7 @@ const deleteRoomFeature = (room_id,room_feature_id) => {
                 }
                 else{
                     dispatch(removingRoomFeatureFailed("Room feature remove"));
+                    checkIfAuthFailed(res);
                 }
             }
             else{

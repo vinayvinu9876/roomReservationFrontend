@@ -1,5 +1,6 @@
 import axios from 'axios';
 import buildUrl from '../../utils/buildUrl';
+import checkIfAuthFailed from '../../utils/onAuthFailed';
 import { setFetchingRoomScheduleData , setFetchingRoomScheduleDataFailure, setFetchingRoomScheduleDataSuccess } from './roomScheduleSlice';
 
 const fetchRoomsSchedule = (room_id) =>{
@@ -23,6 +24,7 @@ const fetchRoomsSchedule = (room_id) =>{
                 }
                 else{
                     dispatch(setFetchingRoomScheduleDataFailure(res.data["message"]));
+                    checkIfAuthFailed(res);
                 }
             }
             else{

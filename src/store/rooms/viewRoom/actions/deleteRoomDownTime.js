@@ -1,5 +1,6 @@
 import axios from 'axios';
 import buildUrl from "../../../../utils/buildUrl";
+import checkIfAuthFailed from '../../../../utils/onAuthFailed';
 import { removingDownTimeFailure, removingDownTimeSuccess, removingRoomDownTime   } from '../viewRoomSlice';
 import viewRoom from './viewRoom';
 
@@ -25,6 +26,7 @@ const deleteRoomDowntime = (room_id,down_time_id) => {
                 }
                 else{
                     dispatch(removingDownTimeFailure(res.data["message"]));
+                    checkIfAuthFailed(res);
                 }
 
             }

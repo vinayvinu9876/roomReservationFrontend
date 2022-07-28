@@ -2,6 +2,7 @@ import buildUrl from '../../../../utils/buildUrl';
 import toast from 'react-hot-toast';
 import { updatingRoomFeature,  updatingRoomFeatureSuccess, updatingRoomFeatureFailed, /*viewRoom*/ } from '../viewRoomSlice';
 import axios from 'axios';
+import checkIfAuthFailed from '../../../../utils/onAuthFailed';
 
 const updateRoomFeature = (room_id,room_feature_id,value) => {
 
@@ -38,6 +39,7 @@ const updateRoomFeature = (room_id,room_feature_id,value) => {
                 else{
                     toast.error(res.data["message"]);
                     dispatch(updatingRoomFeatureFailed(res.data["message"]));
+                    checkIfAuthFailed(res);
                 }
             }
             else{

@@ -54,7 +54,13 @@ const UserRooms = () => {
                         </div>
                     }
                     {
-                    (!loading) && (!errMessage) &&
+                        (!loading) && (!errMessage) && (roomsData.length===0) &&
+                        <div style={{width:"100%",height:"200px",padding:"20px",paddingTop:"50px"}}>
+                            <center><p style={{color:"red"}}>No Rooms available</p></center>
+                        </div>
+                    }
+                    {
+                    (!loading) && (!errMessage) && (roomsData.length!==0) &&
                     <table className="table mb-0">
                     <thead className="bg-light">
                         <tr>

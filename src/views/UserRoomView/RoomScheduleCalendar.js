@@ -106,13 +106,13 @@ function getRoomDownTimeEvents(roomDownTime) {
 
         for(let i=0;i<dates.length;i++){
 
-            console.log("Date = ",dates[i]);
-            console.log("Start hour = ",startHour," start min =  ",startMin);
+            //console.log("Date = ",dates[i]);
+            //console.log("Start hour = ",startHour," start min =  ",startMin);
 
             let newStart = setHoursAndMinutes(dates[i],startHour,startMin);
             let newEnd   = setHoursAndMinutes(dates[i],endHour,endMin);
 
-            console.log("New start = ",newStart," New end = ",newEnd);
+            //console.log("New start = ",newStart," New end = ",newEnd);
             if(isValidDate(newStart) && isValidDate(newEnd)){
                 events.push({
                     title: desc, 

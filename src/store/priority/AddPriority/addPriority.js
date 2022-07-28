@@ -1,6 +1,7 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 import buildUrl from "../../../utils/buildUrl";
+import checkIfAuthFailed from "../../../utils/onAuthFailed";
 import { addingPriority,addPrioritySuccess,addPriorityFailed  } from "./addPrioritySlice";
 
 const addPriority = () =>{
@@ -58,6 +59,7 @@ const addPriority = () =>{
                 else{
                     toast.error(res.data["message"]);
                     dispatch(addPriorityFailed(res.data["message"]));
+                    checkIfAuthFailed(res);
                 }
 
             }

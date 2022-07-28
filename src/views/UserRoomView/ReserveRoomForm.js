@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {Row,Col,Card,CardHeader,CardBody,Button,Form ,FormInput} from 'shards-react';
 import ReactQuill from "react-quill";
 import addReservation from "../../store/addRoomReservation/addReservation";
 import {useDispatch, useSelector} from 'react-redux';
 import { AtomSpinner } from "react-epic-spinners";
+import toast, { Toaster } from "react-hot-toast";
 
 const ReserveRoomForm = ({room_id}) =>{
 
@@ -18,10 +19,7 @@ const ReserveRoomForm = ({room_id}) =>{
     const [no_of_attendees, setNoOfAttendees] = useState(0);
     const [attendees_email, setAttendeesEmail] = useState("");
 
-
     const loading = useSelector(state=>state.addRoomReservation.loading);
-
-    console.log("Meeting date = ",meetingDate);
 
     const addRoomReservation = () =>{
         dispatch(
@@ -40,11 +38,81 @@ const ReserveRoomForm = ({room_id}) =>{
 
     }
 
+    useEffect(()=>{
+        onStartTimeChange(meetingStartTime);
+        onEndTimeChange(meetingEndTime);
+    },[meetingDate]);       
+
+    useEffect(()=>{
+        onStartTimeChange(meetingStartTime);
+    },[meetingStartTime]);
+
+    useEffect(()=>{
+        onEndTimeChange(meetingEndTime);
+    },[meetingEndTime]);
+
+    const onStartTimeChange = (time) =>{
+        console.log("Changed start time = ",time);
+        
+        if((!time) || (time==="00:00")){
+            return;
+        }
+        
+        const now = new Date();
+        const hours = parseInt(time.split(":")[0]);
+        const minutes  = parseInt(time.split(":")[1]);
+
+        console.log("Meeting date = ",meetingDate);
+        
+        if( !(new Date(meetingDate).toDateString() ===  now.toDateString()) ){
+            setMeetingStartTime(time);
+            return;
+        }
+
+        if(hours < now.getHours()){
+            setMeetingStartTime("00:00");
+            toast.error("Please enter valid start time");
+        }
+        else if(hours===now.getHours() && minutes<(now.getMinutes()+5)){
+            setMeetingStartTime("00:00");
+            toast.error("Please enter valid start time");
+        }
+        else{
+            setMeetingStartTime(time);
+        }
+        onEndTimeChange(meetingEndTime);
+    }
+
+    const onEndTimeChange = (time) =>{
+        console.log("Changed end time = ",time);
+        if((!time) || (time==="00:00")){
+            return;
+        }
+        const endHours = parseInt(time.split(":")[0]);
+        const endMinutes  = parseInt(time.split(":")[1]);
+
+        const startHours = parseInt(meetingStartTime.split(":")[0]);
+        const startMinutes = parseInt(meetingStartTime.split(":")[1]);
+
+        if(startHours > endHours){
+            setMeetingEndTime("00:00");
+            toast.error("Please select valid end time");
+        }
+        else if(startHours===endHours && startMinutes===endMinutes){
+            setMeetingEndTime("00:00");
+            toast.error("Please select valid end time");
+        }
+        else{
+            setMeetingEndTime(time);
+        }
+    }
+
         
     return (
         
         <Row id="roomReserveForm">
         <Col>
+            <Toaster />
             <Card>
                 <CardHeader className="border-bottom">
                     <h6 className="m-0">Reserve Room</h6>
@@ -104,15 +172,15 @@ const ReserveRoomForm = ({room_id}) =>{
                                     placeholder="Date"
                                     value={meetingDate}
                                     min={new Date().toISOString().split("T")[0]}
-                                    max={getThisWeeksSaturday()}
-                                    onChange={(evt)=>{setMeetingDate(evt.target.value)}}
+                                    max={getDateAfter(30)}
+                                    onChange={(evt)=>{setMeetingDate(evt.target.value);}}
                                 />  
                             </Col>
                             <Col md={3} lg={3} sm={12} xs={12}>
                                 <label>Start Time</label>
                                 <FormInput
                                     type="time"
-                                    placeholder="Date"
+                                    placeholder="Start time"
                                     value={meetingStartTime}
                                     onChange={evt=>setMeetingStartTime(evt.target.value)}
                                 />
@@ -165,13 +233,10 @@ const ReserveRoomForm = ({room_id}) =>{
 }
 
 
-function getThisWeeksSaturday(){
-    var curr = new Date(); // get current date
-    var first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week
-    var last = first + 6; // last day is the first day + 6
-
-    var lastday = new Date(curr.setDate(last));
-    return lastday.toISOString().split("T")[0];
+function getDateAfter(days){
+    var result = new Date();
+    result.setDate(result.getDate() + days);
+    return result.toISOString().split("T")[0];
 }
 
 export default ReserveRoomForm;

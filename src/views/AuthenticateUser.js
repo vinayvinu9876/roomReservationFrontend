@@ -39,9 +39,9 @@ const AuthenticateUser = ({history}) =>{
         <Card small className="mb-4">
           <CardBody className="p-3 pb-3">
                 { 
-                  (!errMessage) && (!loading) &&
+                  (!errMessage) && 
                   <div style={{marginTop:"20px"}}>
-                    <center><h4>Please wait... Until i learn about you <span role="img" aria-label="naughty-emoji" aria-labelledby="emoji-good">😉</span></h4></center>
+                    <center><h4>Please wait... Until i learn about you</h4></center>
                   </div>
                 }
                 {

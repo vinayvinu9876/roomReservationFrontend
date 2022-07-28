@@ -2,6 +2,7 @@ import axios from 'axios';
 import { setAddRoomReservationFailure, setAddingRoomReservation, setAddRoomReservationSuccess  } from './addRoomReservationSlice';
 import buildUrl from '../../utils/buildUrl';
 import { fetchRoomsSchedule } from '../roomSchedule/roomScheduleSlice';
+import checkIfAuthFailed from '../../utils/onAuthFailed';
 
 const addReservation = ({room_id=null,meetingTitle=null,organizedBy=null,meetingDesc=null,date=null,startTime=null,endTime=null,noOfAttendees=0,attendeesEmail=null}) => {
 
@@ -49,6 +50,8 @@ const addReservation = ({room_id=null,meetingTitle=null,organizedBy=null,meeting
             return;
         }
 
+        
+
         let meetingDate = new Date(date);
 
         meetingDate.setHours(startTime.split(":")[0],startTime.split(":")[1]);
@@ -84,6 +87,8 @@ const addReservation = ({room_id=null,meetingTitle=null,organizedBy=null,meeting
                 }
                 else{
                     dispatch(setAddRoomReservationFailure(res.data["message"]));
+                    checkIfAuthFailed(res);
+                    
                 }
             }
         }).catch((err)=>{

@@ -2,6 +2,7 @@ import axios from "axios";
 import buildUrl from "../../../../utils/buildUrl";
 import { addingRoomImage , addingRoomImageSuccess, addingRoomImageFailed } from "../viewRoomSlice";
 import viewRoom from "./viewRoom";
+import checkIfAuthFailed from "../../../../utils/onAuthFailed";
 
 const addImage = (room_id,imageData) =>{   
     
@@ -30,6 +31,7 @@ const addImage = (room_id,imageData) =>{
                 }
                 else{
                     dispatch(addingRoomImageFailed(res.data["message"]));
+                    checkIfAuthFailed(res);
                 }
             }
             else{

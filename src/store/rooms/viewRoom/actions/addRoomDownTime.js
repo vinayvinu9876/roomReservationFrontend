@@ -1,5 +1,6 @@
 import axios from 'axios';
 import buildUrl from '../../../../utils/buildUrl';
+import checkIfAuthFailed from '../../../../utils/onAuthFailed';
 import { addingRoomDownTime, addingRoomDownTimeFailure, addingRoomDownTimeSuccess } from '../viewRoomSlice';
 import viewRoom from './viewRoom';
 
@@ -38,6 +39,7 @@ const addRoomDownTime = (room_id,day,start,end,description) => {
                 else{
                     dispatch(addingRoomDownTimeFailure(res.data["message"]));
                     console.log("Failed to add room down time. Message = ",res.data["message"]);
+                    checkIfAuthFailed(res);
                 }
             }
             else{

@@ -16,7 +16,6 @@ const MainFooter = ({ contained, menuItems, copyright }) => (
             </NavItem>
           ))}
         </Nav>
-        <span className="copyright ml-auto my-auto mr-2">{copyright}</span>
       </Row>
     </Container>
   </footer>
@@ -41,6 +40,7 @@ MainFooter.defaultProps = {
   contained: false,
   copyright: "Copyright © 2018 DesignRevision",
   menuItems: [
+    /*
     {
       title: "Home",
       to: "#"
@@ -60,7 +60,7 @@ MainFooter.defaultProps = {
     {
       title: "Blog",
       to: "#"
-    }
+    }*/
   ]
 };
 

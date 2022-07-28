@@ -1,6 +1,7 @@
 import axios from "axios";
 import toast from 'react-hot-toast';
 import buildUrl from "../../../utils/buildUrl";
+import checkIfAuthFailed from "../../../utils/onAuthFailed";
 import { editingPriority, editingPriorityFailure, editingPrioritySuccess, fetchPriority } from "../prioritySlice";
 
 const editPriority = ({id,role_ids,priority_no,name,desc,status}) =>{
@@ -61,6 +62,7 @@ const editPriority = ({id,role_ids,priority_no,name,desc,status}) =>{
             else{
                 toast.error(res.data["message"]);
                 dispatch(editingPriorityFailure(res.data["message"]));
+                checkIfAuthFailed(res);
             }
         }).catch((err)=>{
             console.error(err);

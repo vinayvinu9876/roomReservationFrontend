@@ -1,5 +1,6 @@
 import axios from 'axios';
 import buildUrl from '../../../../utils/buildUrl';
+import checkIfAuthFailed from '../../../../utils/onAuthFailed';
 import { addingFeature, addingFeatureFailure, addingFeatureSuccess } from '../viewRoomSlice';
 import viewRoom from './viewRoom';
 
@@ -31,6 +32,7 @@ const addFeature  = (feature_id,room_id,total_items) =>{
                 else{
                     dispatch(addingFeatureFailure(res.data["message"]));
                     console.log("Failure Message = ",res.data["message"]);
+                    checkIfAuthFailed(res);
                 }
             }
             else{

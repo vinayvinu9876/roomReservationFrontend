@@ -1,5 +1,6 @@
 import axios from "axios";
 import buildUrl from '../../utils/buildUrl';
+import checkIfAuthFailed from "../../utils/onAuthFailed";
 import { setFetchingMeetingList, setFetchingMeetingListFailure, setFetchingMeetingListSuccessful } from "./reservedMeetingListSlice";
 
 const getReservedMeetingList = (pageNo) => {
@@ -36,6 +37,7 @@ const getReservedMeetingList = (pageNo) => {
                 }
                 else{
                     dispatch(setFetchingMeetingListFailure(res.data["message"]));
+                    checkIfAuthFailed(res);
                 }
             }
             else{

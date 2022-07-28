@@ -1,5 +1,6 @@
 import axios from "axios";
 import buildUrl from "../../../utils/buildUrl";
+import checkIfAuthFailed from "../../../utils/onAuthFailed";
 import { setAddingFeature,setAddingFeatureSuccess,setAddingFeatureFailed } from "./addFeatureSlice";
 
 
@@ -55,6 +56,7 @@ const addFeature = () =>{
                 }   
                 else{
                     dispatch(setAddingFeatureFailed(res.data["message"]));
+                    checkIfAuthFailed(res);
                 }
 
             }

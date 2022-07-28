@@ -1,6 +1,7 @@
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import buildUrl from '../../utils/buildUrl';
+import checkIfAuthFailed from '../../utils/onAuthFailed';
 import { getReservedMeetingList, setCancellingMeeting, setCompletedCancelMeeting } from './reservedMeetingListSlice';
 
 
@@ -35,6 +36,7 @@ const cancelMeeting = (reservation_id) => {
                 }
                 else{
                     toast.error(res.data["message"]);
+                    checkIfAuthFailed(res);
                 }
             }
             else{

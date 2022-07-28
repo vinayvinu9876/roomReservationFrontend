@@ -1,5 +1,6 @@
 import axios from "axios";
 import buildUrl from "../../../../utils/buildUrl";
+import checkIfAuthFailed from "../../../../utils/onAuthFailed";
 import { updatingRoomData,updateRoomDataSuccess,updateRoomDataFailed } from "../viewRoomSlice";
 import viewRoom from "./viewRoom";
 
@@ -32,6 +33,7 @@ const updateRoom = (room_id,payload) =>{
                 }       
                 else{
                     dispatch(updateRoomDataFailed());
+                    checkIfAuthFailed(res);
                 }
             }
             else{

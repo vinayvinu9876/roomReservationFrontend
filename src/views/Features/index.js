@@ -73,8 +73,16 @@ const Features = () =>{
                   </center>
             }
             {
+                  (!errMessage) && (!loading) && (featureData.length===0) &&
+                  <center>
+                  <div style={{padding:"30px"}}>
+                    <p style={{color:"red"}}>No Features Data available</p>
+                  </div>
+                  </center>
+            }
+            {
 
-              (!loading) && (!errMessage) &&
+              (!loading) && (!errMessage) && (featureData.length>0) &&
 
               
             <table style={{overflowY:'scroll',overflowX:"scroll"}} className="table mb-0">

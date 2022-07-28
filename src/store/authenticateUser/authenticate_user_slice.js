@@ -23,6 +23,7 @@ if(localStorage.getItem("is_admin")){
 }
 
 
+
 const authenticate_user_slice = createSlice({  
 
     name : "authenticate_user",
@@ -42,6 +43,7 @@ const authenticate_user_slice = createSlice({
             state.is_admin = action.payload["is_admin"];
             localStorage.setItem("authToken",action.payload["token"]);
             localStorage.setItem("is_admin",action.payload["is_admin"]);
+            localStorage.setItem("last_login_time",(new Date().toISOString()));
             state.navItems = getSideNavBarItems(action.payload["is_admin"]);
         },
 

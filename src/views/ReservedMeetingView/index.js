@@ -53,11 +53,17 @@ const ReservedMeetingView = () =>{
                             {
                                 (!loading) && (errMessage) &&
                                 <div style={{width:"100%",padding:"20px"}}>
-                                    <p style={{color:"red"}}>{errMessage}</p>
+                                    <center><p style={{color:"red"}}>{errMessage}</p></center>
                                 </div>
                             }
                             {
-                                (!loading) && (!errMessage) && (meetingList) &&
+                                (!loading) && (!errMessage) && (meetingList.length===0) &&
+                                <div style={{width:"100%",padding:"20px",paddingTop:"50px"}}>
+                                    <center><p style={{color:"red"}}>No meetings yet</p></center>
+                                </div>
+                            }
+                            {
+                                (!loading) && (!errMessage) && (meetingList) && (meetingList.length>0) &&
                             <table className="table mb-0">
                             <thead className="bg-light">
                                 <tr>

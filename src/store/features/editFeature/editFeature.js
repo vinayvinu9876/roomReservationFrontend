@@ -1,6 +1,7 @@
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import buildUrl from '../../../utils/buildUrl';
+import checkIfAuthFailed from '../../../utils/onAuthFailed';
 import { setEditingFeature, setEditingFeatureFailed, setEditingFeatureSuccess } from '../featuresSlice';
 import {fetchFeatures} from '../featuresSlice';
 
@@ -51,6 +52,7 @@ const editFeature = (feature_id,feature_name,feature_desc,total_available,status
                 else{
                     toast.error(res.data["message"]);
                     dispatch(setEditingFeatureFailed(res.data["message"]));
+                    checkIfAuthFailed(res);
                 }
             }
             else{

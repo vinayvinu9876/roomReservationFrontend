@@ -1,5 +1,6 @@
 import axios from "axios";
 import buildUrl from "../../utils/buildUrl";
+import checkIfAuthFailed from "../../utils/onAuthFailed";
 import { setFetchingRooms, setFetchingRoomsSuccesful,setFetchingRoomsFailure } from "./roomsSlice";
 
 const fetchRooms = (pageNo) =>{
@@ -27,6 +28,7 @@ const fetchRooms = (pageNo) =>{
                 }
                 else{
                     dispatch(setFetchingRoomsFailure(res.data["message"]));
+                    checkIfAuthFailed(res);
                 }
             }
             else{

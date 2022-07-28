@@ -1,5 +1,6 @@
 import axios from "axios";
 import buildUrl from "../../../utils/buildUrl";
+import checkIfAuthFailed from "../../../utils/onAuthFailed";
 import { setAddingRoom,setAddingRoomFailed,setAddingRoomSuccess } from "./addRoomSlice";    
 
 const addRoom = () => {
@@ -68,6 +69,7 @@ const addRoom = () => {
             if(res.status===200){
                 if(res.data["status"]==="failure"){
                     dispatch(setAddingRoomFailed(res.data["message"]));
+                    checkIfAuthFailed(res);
                     return;
                 }
 

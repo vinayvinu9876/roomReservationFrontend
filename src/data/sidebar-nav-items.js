@@ -6,7 +6,7 @@ export default function(isAdmin=false) {
   if(!isAdmin){
     return [
       {
-        title : "User Rooms",
+        title : "Reserve Room",
         to : "/user-rooms",
         htmlBefore : "<i class='material-icons'>edit</i>",
         htmlAfter : ""
@@ -33,7 +33,7 @@ export default function(isAdmin=false) {
       htmlAfter: ""
     },
     {
-      title : "User Rooms",
+      title : "Reserve Rooms",
       to : "/user-rooms",
       htmlBefore : "<i class='material-icons'>edit</i>",
       htmlAfter : ""
@@ -50,6 +50,7 @@ export default function(isAdmin=false) {
       htmlBefore: '<i class="material-icons">edit</i>',
       htmlAfter: "" 
     },
+    /*
     {
       title: "Priority",
       to: "/priority",

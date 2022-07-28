@@ -1,5 +1,6 @@
 import axios from "axios";
 import buildUrl from "../../utils/buildUrl";
+import checkIfAuthFailed from "../../utils/onAuthFailed";
 import { setFetchingFeatures, setFetchingFeaturesFailed,setFetchingFeaturesSuccess } from "./featuresSlice";
 
 const fetchFeatures = (pageNo) =>{
@@ -37,6 +38,7 @@ const fetchFeatures = (pageNo) =>{
 
                 if(res.data["status"]==="failure"){
                     dispatch(setFetchingFeaturesFailed(res.data["message"]));
+                    checkIfAuthFailed(res);
                     return;
                 }
 

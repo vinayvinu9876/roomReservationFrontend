@@ -1,5 +1,6 @@
 import axios from 'axios';
 import buildUrl from "../../../../utils/buildUrl";
+import checkIfAuthFailed from '../../../../utils/onAuthFailed';
 import { removingRoomImage, removingImageSuccess, removingImageFailed } from '../viewRoomSlice';
 import viewRoom from './viewRoom';
 
@@ -35,6 +36,7 @@ const removeRoomImage = (room_id,media_id) => {
                 }   
                 else{
                     dispatch(removingImageFailed(res.data["message"]));
+                    checkIfAuthFailed(res);
                 }
             }
             else{

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import buildUrl from '../../utils/buildUrl';
 import { authenticatingUser, userAuthenticatedSuccesfully, userAuthenticationFailed } from './authenticate_user_slice';
+import checkIfAuthFailed from '../../utils/onAuthFailed';
 
 const authenticate_user = (encrypted_session_data) =>{
 
@@ -18,7 +19,7 @@ const authenticate_user = (encrypted_session_data) =>{
                 }
                 else{
                     dispatch(userAuthenticationFailed(res.data["message"]));
-                    
+                    checkIfAuthFailed(res);
                 }
             }
             else{

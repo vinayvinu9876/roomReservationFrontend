@@ -1,5 +1,6 @@
 import axios from "axios";
 import buildUrl from "../../utils/buildUrl";
+import checkIfAuthFailed from "../../utils/onAuthFailed";
 import { fetchingPriority , fetchingPriorityFailed, fetchingPrioritySuccess  } from "./prioritySlice";
 
 
@@ -24,6 +25,7 @@ const fetchPriority = () =>{
                 }
                 else{
                     dispatch(fetchingPriorityFailed(res.data["message"]));
+                    checkIfAuthFailed(res);
                 }
             }   
             else{
